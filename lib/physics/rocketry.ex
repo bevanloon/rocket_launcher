@@ -6,7 +6,12 @@ defmodule Physics.Rocketry do
   def escape_velocity(:earth) do
     escape_velocity(earth)
   end
-
+  def escape_velocity(:mars) do
+    escape_velocity(mars)
+  end
+  def escape_velocity(:moon) do
+    escape_velocity(moon)
+  end
   def escape_velocity(planet) when is_map(planet) do
     planet
       |> calculate_escape
