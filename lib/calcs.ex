@@ -15,6 +15,10 @@ defmodule Calcs do
     :math.sqrt(val)
   end
 
+  def cube_root(val) do
+    :math.
+  end
+
   def squared(val) do
     val * val
   end
