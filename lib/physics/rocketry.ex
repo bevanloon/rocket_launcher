@@ -24,18 +24,26 @@ defmodule Physics.Rocketry do
   end
 
   def orbital_term(height) do
-    4 * (:math.pi |> squared) * (orbital_radius(height) |> cubed) /
-        (newtons_gravitational_constant * earth.mass)
+    4 * (:math.pi |> squared) *
+        (orbital_radius(height) |> cubed) /
+        (newtons_gravitational_constant
+          * earth.mass)
       |> square_root
       |> seconds_to_hours
   end
 
   def height_for_orbital_term(term) do
-      newtons_gravitational_constant *
+      (newtons_gravitational_constant *
         earth.mass *
-        (term |> squared)  /
-        4 * (:math.pi |> squared)
+        (term |> seconds_to_hours |> squared)  /
+        (4 * (:math.pi |> squared)))
         |> cube_root
+        |> height_sans_orbital_radius
+        |> to_km
+  end
+
+  defp height_sans_orbital_radius(height) do
+    earth.radius - height
   end
 
   defp orbital_radius(height) do

@@ -17,4 +17,9 @@ defmodule CalcsTest do
     assert to_km(10250) == 10.25
     assert to_km(10678) == 10.678
   end
+
+  test "cube root" do
+    assert cube_root(27) == 3
+    assert cube_root(8) == 2
+  end
 end
