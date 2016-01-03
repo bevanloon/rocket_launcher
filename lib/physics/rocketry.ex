@@ -19,15 +19,27 @@ defmodule Physics.Rocketry do
       |> nearest_tenth
   end
 
+  def orbital_speed(height) do
+    orbital_speed(height, earth)
+  end
+
   def orbital_speed(height,  %{mass: mass, radius: radius}) do
     newtons_gravitational_constant * mass  /
       orbital_radius(height, radius)
     |> square_root
   end
 
+  def orbital_acceleration(height) do
+    orbital_acceleration(height, earth)
+  end
+
   def orbital_acceleration(height, %{mass: mass, radius: radius}) do
     (orbital_speed(height, %{mass: mass, radius: radius}) |> squared) /
       orbital_radius(height, radius)
+  end
+
+  def orbital_term(height) do
+    orbital_term(height, earth)
   end
 
   def orbital_term(height, %{mass: mass, radius: radius}) do

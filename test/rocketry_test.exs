@@ -15,6 +15,14 @@ defmodule RocketryTests do
     assert escape_velocity(moon) == 2.4
   end
 
+  test "orbital term default to earth" do
+    assert orbital_term(100) == 1.5
+  end
+
+  test "orbital term mars" do
+    assert orbital_term(100, mars) == 1.8
+  end
+
   test "orbital term greater than 3 hours" do
     assert orbital_term(6366, earth) > 3
   end
