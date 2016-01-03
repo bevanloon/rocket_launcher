@@ -1,6 +1,7 @@
 defmodule SolarTest do
   use ExUnit.Case
   use Timex
+  import Solar
 
   setup do
     flares =  [
@@ -19,4 +20,32 @@ defmodule SolarTest do
   test "we have 8 solar flares", %{data: flares} do
     assert length(flares) == 8
   end
+
+  test "power multiplies arguments" do
+    assert power(1,1) == 1
+    assert power(10,1) == 10
+    assert power(3,2) == 6
+  end
+
+  test "power for X" do
+    assert power( %{classification: :X,
+                    scale: 99,
+                    date: Date.from({1859, 8, 29})}
+                ) == 99000
+  end
+
+  test "power for M" do
+    assert power( %{classification: :M,
+                    scale: 99,
+                    date: Date.from({1859, 8, 29})}
+                ) == 990
+  end
+
+  test "power for C" do
+    assert power( %{classification: :C,
+                    scale: 99,
+                    date: Date.from({1859, 8, 29})}
+                ) == 99
+  end
+
 end
