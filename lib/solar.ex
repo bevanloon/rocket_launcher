@@ -12,7 +12,18 @@ defmodule Solar do
     power(1, s)
   end
 
-  def power(classification, scale) do
+  def no_eva(flares) do
+    Enum.filter flares, fn  (flare) ->
+      power(flare) > 1000
+    end
+  end
+
+  def deadliest(flares) do
+    Enum.map(flares, &(power(&1)))
+      |> Enum.max
+  end
+
+  defp power(classification, scale) do
     classification * scale
   end
 end

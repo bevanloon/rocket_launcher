@@ -17,15 +17,19 @@ defmodule SolarTest do
     {:ok, data: flares}
   end
 
+  test "go inside", %{data: flares} do
+    assert length(no_eva(flares)) == 3
+  end
+
+  test "deadliest", %{data: flares} do
+    assert deadliest(flares) == 99000
+  end
+
   test "we have 8 solar flares", %{data: flares} do
     assert length(flares) == 8
   end
 
-  test "power multiplies arguments" do
-    assert power(1,1) == 1
-    assert power(10,1) == 10
-    assert power(3,2) == 6
-  end
+
 
   test "power for X" do
     assert power( %{classification: :X,
