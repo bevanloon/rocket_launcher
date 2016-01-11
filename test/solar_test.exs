@@ -16,29 +16,22 @@ defmodule SolarTest do
     ]
     {:ok, data: flares}
   end
-  test "anonymous function total flare power", %{data: flares} do
-      assert anon_total_flare_power(flares, 0, fn(flare, acc) -> power(flare) + acc end) == 216911.7
-    end
 
-  test "roll your own reduce", %{data: flares} do
-    assert reduce_flare_power(flares, 0, fn(flare, acc) -> power(flare) + acc end) == 216911.7
-  end
-
-  test "sum powers on empty list" do
-    assert total_flare_power([], 5) == 5
-  end
-
-  test "sum powers on flare" do
-    # X is 1000, scale is 99 so power for this one must be 99000
-    assert total_flare_power([%{classification: :X, scale: 99, date: Date.from({1859, 8, 29})}], 0) == 99000
+  test "flare list", %{data: flares} do
+    should_be = [
+      %{power: 99000, is_deadly: true},
+      %{power: 58.0, is_deadly: false},
+      %{power: 12.0, is_deadly: false},
+      %{power: 3.2, is_deadly: false},
+      %{power: 836.0, is_deadly: false},
+      %{power: 2.5, is_deadly: false},
+      %{power: 72000, is_deadly: true},
+      %{power: 45000, is_deadly: true}]
+    assert flare_list(flares) == should_be
   end
 
   test "sum powers on all flares", %{data: flares} do
     assert total_flare_power(flares) == 216911.7
-  end
-
-  test "enum sum eva", %{data: flares} do
-    assert enum_total_flare_power(flares) == 216911.7
   end
 
   test "go inside", %{data: flares} do
