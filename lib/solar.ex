@@ -12,13 +12,6 @@ defmodule Solar do
     power(1, s)
   end
 
-  def flare_list(flares) do
-    Enum.map flares, fn(flare) ->
-      p = power(flare)
-       {:flare, :power, p, :is_deadly, p > 1000}
-    end
-  end
-
   def no_eva(flares) do
     Enum.filter flares, fn (flare) ->
       power(flare) > 1000
@@ -30,9 +23,16 @@ defmodule Solar do
       |> Enum.max
   end
 
-  def for_total_flare_power(flares) do
+  def total_flare_power(flares) do
     (for flare <- flares, do: power(flare))
-      |> Enum.sum
+    |> Enum.sum
+  end
+
+  def flare_list(flares) do
+    Enum.map flares, fn(flare) ->
+      p = power(flare)
+      %{power: p, is_deadly: p > 1000}
+    end
   end
 
   defp power(classification, scale) do

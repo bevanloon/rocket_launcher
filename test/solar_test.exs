@@ -17,26 +17,18 @@ defmodule SolarTest do
     {:ok, data: flares}
   end
 
-  test "test flare list", %{data: flares} do
-    assert length(flare_list(flares)) == 8
-    list = flare_list(flares)
-    IO.inspect list
-
-    deadly = Enum.filter list, fn (flare) ->
-      IO.inspect flare #flare[is_deadly]
-      elem(flare, 2)
-    end
-
-#    assert length(deadly) == 3
-
+  test "flare list", %{data: flares} do
+    should_be = [
+      %{power: 99000, is_deadly: true},
+      %{power: 58.0, is_deadly: false},
+      %{power: 12.0, is_deadly: false},
+      %{power: 3.2, is_deadly: false},
+      %{power: 836.0, is_deadly: false},
+      %{power: 2.5, is_deadly: false},
+      %{power: 72000, is_deadly: true},
+      %{power: 45000, is_deadly: true}]
+    assert flare_list(flares) == should_be
   end
-
-
-
-  test "for total flare power", %{data: flares} do
-    assert for_total_flare_power(flares) == 216911.7
-  end
-
 
   test "go inside", %{data: flares} do
     assert length(no_eva(flares)) == 3
