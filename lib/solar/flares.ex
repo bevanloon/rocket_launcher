@@ -1,4 +1,28 @@
-defmodule Solar do
+defmodule Solar.Flare do
+
+  defstruct [
+    classification: :M,
+    scale: 0,
+    power: 0,
+    is_deadly: false,
+    date: nil
+  ]
+
+  def load(flares) do
+    Enum.map flares, fn(flare) ->
+      power = power(flare)
+      deadly = power > 1000
+      %{flare | power: power, is_deadly: deadly}
+    end
+  end
+
+  def load_flares_comp(flares) do
+    for flare <- flares,
+      power <- [power(flare)],
+      is_deadly <- [power > 1000],
+      do: %{flare | power: power, is_deadly: is_deadly}
+
+  end
 
   def power(%{classification: :X, scale: s}) do
     power(1000, s)
@@ -24,7 +48,10 @@ defmodule Solar do
   end
 
   def total_flare_power(flares) do
-    (for flare <- flares, do: power(flare))
+    for flare <- flares,
+      power <- [power(flare)],
+      is_deadly <- [power > 1000],
+      do: %{power: power, is_deadly: is_deadly}
     |> Enum.sum
   end
 
