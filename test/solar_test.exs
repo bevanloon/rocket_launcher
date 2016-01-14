@@ -68,24 +68,8 @@ defmodule SolarTest do
 
 
   test "power for X" do
-    assert power( %{classification: :X,
-                    scale: 99,
-                    date: Date.from({1859, 8, 29})}
-                ) == 99000
+    assert calculate_power(
+    %Solar.Flare{classification: :X, scale: 99, date: Date.from({1859, 8, 29})}
+                ) ==     %Solar.Flare{classification: :X, scale: 99, date: Date.from({1859, 8, 29}), power: 99000}
   end
-
-  test "power for M" do
-    assert power( %{classification: :M,
-                    scale: 99,
-                    date: Date.from({1859, 8, 29})}
-                ) == 990
-  end
-
-  test "power for C" do
-    assert power( %{classification: :C,
-                    scale: 99,
-                    date: Date.from({1859, 8, 29})}
-                ) == 99
-  end
-
 end

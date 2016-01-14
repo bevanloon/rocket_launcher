@@ -10,18 +10,32 @@ defmodule Solar.Flare do
 
   def load(flares) do
     Enum.map flares, fn(flare) ->
-      power = power(flare)
-      deadly = power > 1000
-      %{flare | power: power, is_deadly: deadly}
+      flare
+        |> calculate_power
+        |> calculate_deadliness
     end
   end
 
   def load_flares_comp(flares) do
     for flare <- flares,
-      power <- [power(flare)],
-      is_deadly <- [power > 1000],
-      do: %{flare | power: power, is_deadly: is_deadly}
+      power <- [calculate_power(flare)],
+      is_deadly <- [calculate_deadliness(power)],
+      do: is_deadly
 
+    # for flare <- flares,
+    #   power <- [power(flare)],
+    #   is_deadly <- [power > 1000],
+    #   do: %{flare | power: power, is_deadly: is_deadly}
+
+  end
+
+  def calculate_power(flare) do
+    factor = case flare.classification do
+      :M -> 10
+      :X -> 1000
+      :C -> 1
+    end
+    %{flare | power: flare.scale * factor}
   end
 
   def power(%{classification: :X, scale: s}) do
@@ -40,6 +54,10 @@ defmodule Solar.Flare do
     Enum.filter flares, fn (flare) ->
       power(flare) > 1000
     end
+  end
+
+  def calculate_deadliness(flare) do
+      %{flare | is_deadly: flare.power > 1000}
   end
 
   def deadliest(flares) do
